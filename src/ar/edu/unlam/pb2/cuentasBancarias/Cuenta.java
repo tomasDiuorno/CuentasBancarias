@@ -11,7 +11,7 @@ public abstract class Cuenta {
 
 	abstract void depositar(Double monto);
 
-	abstract void retirar(Double monto);
+	abstract void retirar(Double monto) throws NoPoseeDineroSuficienteEnCuentaException;
 
 	public Object getSaldo() {
 		return this.dineroEnCuenta;

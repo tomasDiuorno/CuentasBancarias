@@ -12,10 +12,11 @@ public class CuentaSueldo extends Cuenta {
 	}
 
 	@Override
-	void retirar(Double monto) {
-		if(this.dineroEnCuenta > monto) {
-			this.dineroEnCuenta -= monto;			
+	void retirar(Double monto) throws NoPoseeDineroSuficienteEnCuentaException {
+		if(this.dineroEnCuenta < monto) {
+			throw new NoPoseeDineroSuficienteEnCuentaException("El dinero que desea retirar es mayor al que posee en cuenta");
 		}
+		this.dineroEnCuenta -= monto;
 	}
 
 }
