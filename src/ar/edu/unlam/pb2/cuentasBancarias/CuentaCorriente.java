@@ -15,21 +15,19 @@ public class CuentaCorriente extends Cuenta {
 
 	@Override
 	void retirar(Double monto) throws NoPoseeDineroSuficienteEnCuentaException {
-		if (this.dineroEnCuenta + this.descubierto < monto) {
+		Double limite = this.dineroEnCuenta + this.descubierto;
+
+		if (limite < monto) {
 			throw new NoPoseeDineroSuficienteEnCuentaException(
 					"El dinero que desea retirar es mayor al que posee en cuenta");
-		}
-
-		if (monto < this.dineroEnCuenta) {
+		} else if (monto < this.dineroEnCuenta) {
 			this.dineroEnCuenta -= monto;
-		}
+		} else if (monto > this.dineroEnCuenta && monto < limite) {
+			Double dineroAPrestar = monto - this.dineroEnCuenta;
 
-		if (monto > this.dineroEnCuenta && monto < this.dineroEnCuenta + this.descubierto) {
-			Double diferencia = monto - this.dineroEnCuenta;
-			Double prestado = this.descubierto - diferencia;
-			
 			this.dineroEnCuenta = 0.0;
-			this.descubierto -= prestado * 1.05;
+			this.deuda += dineroAPrestar * 1.05;
+			this.descubierto -= this.deuda;
 		}
 	}
 

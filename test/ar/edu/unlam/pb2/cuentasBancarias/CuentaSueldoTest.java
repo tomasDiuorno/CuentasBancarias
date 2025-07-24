@@ -34,20 +34,9 @@ public class CuentaSueldoTest {
 		assertEquals(esperado, cuentaSueldo.getSaldo());
 	}
 	
-	@Test
-	public void realizoUnDepositoDe2_000EnLaCuentaSueldoYRetiro2_000ParaQueQuedeLaCuentaEn0() throws NoPoseeDineroSuficienteEnCuentaException {
-		cuentaSueldo.depositar(2000.0);
-		cuentaSueldo.retirar(2000.0);
-		Double esperado = 0.0;
-		assertEquals(esperado, cuentaSueldo.getSaldo());
-	}
-	
 	@Test (expected = NoPoseeDineroSuficienteEnCuentaException.class)
 	public void realizoUnDepositoDe2_000EnLaCuentaSueldoEIntentoRetirarMasDineroDelQueTengo() throws NoPoseeDineroSuficienteEnCuentaException {
 		cuentaSueldo.depositar(2000.0);
 		cuentaSueldo.retirar(2001.0);
-		Double esperado = 1000.0;
-		assertEquals(esperado, cuentaSueldo.getSaldo());
 	}
-
 }

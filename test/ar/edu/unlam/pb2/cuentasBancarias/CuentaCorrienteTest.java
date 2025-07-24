@@ -14,9 +14,32 @@ public class CuentaCorrienteTest {
 	}
 
 	@Test
-	public void dadaUnaCuentaCorriente_RealizoUnDepositoEIntentoRetirarUnImporteMayorAlQueTengoEnCuenta() throws NoPoseeDineroSuficienteEnCuentaException {
+	public void dadaUnaCuentaCorriente_RealizoUnDepositoYRetirarUnImporteMayorAlQueTengoEnCuenta() throws NoPoseeDineroSuficienteEnCuentaException {
 		cuenta.depositar(2000.0);
-		cuenta.retirar(1000.0);
+		cuenta.retirar(3000.0);
+		
+		Double saldoEsperado = 0.0;
+		Double deudaGenerada = 1050.0;
+		
+		assertEquals(saldoEsperado, cuenta.getSaldo());
+		assertEquals(deudaGenerada, cuenta.getDeuda());
+	}
+	
+	@Test
+	public void dadaUnaCuentaCorriente_RealizoUnDepositoYRetirarUnImporteMenorAlQueTengoEnCuenta() throws NoPoseeDineroSuficienteEnCuentaException {
+		cuenta.depositar(2000.0);
+		cuenta.retirar(1500.0);
+		
+		Double saldoEsperado = 500.0;
+		Double deudaGenerada = 0.0;
+		
+		assertEquals(saldoEsperado, cuenta.getSaldo());
+		assertEquals(deudaGenerada, cuenta.getDeuda());
 	}
 
+	@Test (expected = NoPoseeDineroSuficienteEnCuentaException.class)
+	public void dadaUnaCuentaCorriente_RealizoUnDepositoYRetirarUnImporteMayorAlPermitidoPeroArrojaExcepcion() throws NoPoseeDineroSuficienteEnCuentaException {
+		cuenta.depositar(2000.0);
+		cuenta.retirar(3501.0);
+	}
 }
